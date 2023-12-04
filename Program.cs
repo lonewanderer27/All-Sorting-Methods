@@ -9,6 +9,7 @@ public class AllSortMethods
 {
     private static readonly HeapSort Hs = new HeapSort();
     private static readonly MergeSort Ms = new MergeSort();
+    private static readonly SelectionSort Ss = new SelectionSort();
     private static SortingArrangement _order;
     public static void Main()
     {
@@ -58,6 +59,12 @@ public class AllSortMethods
                     case 2:
                     {
                         Console.WriteLine("You chose MERGE SORT");
+                        success = true;
+                    };
+                        break;
+                    case 3:
+                    {
+                        Console.WriteLine("You chose SELECTION SORT");
                         success = true;
                     };
                         break;
@@ -119,6 +126,18 @@ public class AllSortMethods
             // use merge sort
             var sortedArray = Ms.Sort(array, _order);
             Hs.DisplayArray("\nSorted Array", sortedArray);
+        }
+        
+        else if (_sortingMethod == 3)
+        {
+            // use selection sort
+            var sortedArray = Ss.Sort(array, _order);
+            Hs.DisplayArray("\nSorted Array", sortedArray);
+        }
+        
+        else
+        {
+            Console.WriteLine("Invalid choice, please try again!");
         }
     }
 }
