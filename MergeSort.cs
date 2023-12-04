@@ -2,8 +2,8 @@ namespace All_Sorting_Methods;
 
 public class MergeSort
 {
-    private static SortingArrangement _order;
-    public int[] Sort(int[] arrayNum, SortingArrangement order)
+    private static SortingOrder _order;
+    public int[] Sort(int[] arrayNum, SortingOrder order)
     {
         _order = order;
         return CheckArray(arrayNum);
@@ -28,7 +28,7 @@ public class MergeSort
         return array;
     }
 
-    static int[] GetHalfArray(int[] oldArray, int from, int to, string side)
+    private static int[] GetHalfArray(int[] oldArray, int from, int to, string side)
     {
         Console.WriteLine("--- Half Array ---");
         int[] newArray = new int[to - from];
@@ -44,7 +44,7 @@ public class MergeSort
         return newArray;
     }
     
-    static int[] MergeArray(int[] leftArray, int[] rightArray) {
+    private static int[] MergeArray(int[] leftArray, int[] rightArray) {
         Console.WriteLine("--- Merge ---");
 
         int[] mergedArray = new int[leftArray.Length + rightArray.Length];
@@ -55,11 +55,10 @@ public class MergeSort
 
         while (leftIndex < leftArray.Length & rightIndex < rightArray.Length)
         {
-            string opr = _order == SortingArrangement.Ascending ? " > " : " < ";
+            string opr = _order == SortingOrder.Asc ? " > " : " < ";
             Console.Write(leftArray[leftIndex] + opr + rightArray[rightIndex]);
-        
-            // replace > with < so it'll become descending
-            if (_order == SortingArrangement.Ascending)
+            
+            if (_order == SortingOrder.Asc)
             {
                 if (leftArray[leftIndex] > rightArray[rightIndex])
                 {
@@ -79,7 +78,7 @@ public class MergeSort
                 }
             }   
 
-            if (_order != SortingArrangement.Descending) continue;
+            if (_order != SortingOrder.Desc) continue;
             if (leftArray[leftIndex] < rightArray[rightIndex])
             {
                 mergedArray[mergeIndex] = rightArray[rightIndex];
@@ -120,7 +119,7 @@ public class MergeSort
         return mergedArray;
     }
     
-    static void ShowArray(string prefix, int[] array)
+    private static void ShowArray(string prefix, int[] array)
     {
         Console.Write(prefix + ": ");
 

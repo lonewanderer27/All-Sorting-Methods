@@ -1,18 +1,25 @@
 ﻿namespace All_Sorting_Methods;
 
-public enum SortingArrangement
+public enum SortingOrder
 {
-    Ascending, Descending
+    Asc, Desc
 }
 
-public class AllSortMethods
+public abstract class SortingMethods
 {
-    private static readonly HeapSort Hs = new HeapSort();
-    private static readonly MergeSort Ms = new MergeSort();
-    private static SortingArrangement _order;
+    private static HeapSort Hs;
+    private static MergeSort Ms;
+    private static SelectionSort Ss;
+    private static SortingOrder _order;
     public static void Main()
     {
-        Console.Write("How many items in the array: ");
+        // initialize the sorting methods
+        Hs = new HeapSort();
+        Ms = new MergeSort();
+        Ss = new SelectionSort();
+        
+        // get the total number of items to be sorted
+        Console.Write("How many items: ");
         var totalNum = Convert.ToInt32(Console.ReadLine());
         var array = new int[totalNum];
 
@@ -22,7 +29,7 @@ public class AllSortMethods
 
             if (int.TryParse(Console.ReadLine(), out array[i]))
             {
-                // add the number
+                // the number is successfully added through out in TryParse above
             }
             else
             {
@@ -31,7 +38,7 @@ public class AllSortMethods
             }
         }
 
-        Hs.DisplayArray("Unsorted Array", array);
+        Hs.ShowArray("Initial Array", array);
 
         int _sortingMethod = 0;
         int _sortingOrder = 0;
@@ -41,30 +48,22 @@ public class AllSortMethods
         do
         {
             Console.WriteLine("Choose sorting method: ");
-            Console.WriteLine("Enter 1 for HEAP SORT  | 2 for MERGE SORT");
-            Console.Write("Choice: ");
+            Console.WriteLine("Enter 0 for HEAP SORT  | 1 for MERGE SORT | 2 for SELECTION SORT: ");
 
             if (int.TryParse(Console.ReadLine(), out var sortingMethod))
             {
                 _sortingMethod = sortingMethod;
                 switch (sortingMethod)
                 {
+                    case 0: success = true;
+                        break;
                     case 1:
-                    {
-                        Console.WriteLine("You chose HEAP SORT");
                         success = true;
-                    };
                         break;
                     case 2:
-                    {
-                        Console.WriteLine("You chose MERGE SORT");
                         success = true;
-                    };
                         break;
-                    default:
-                    {
-                        Console.WriteLine("Invalid choice, please try again!");
-                    };
+                    default: Console.WriteLine("Invalid number, please try again!");
                         break;
                 }
             };
@@ -75,50 +74,54 @@ public class AllSortMethods
         do
         {
             Console.WriteLine("Choose sorting order: ");
-            Console.WriteLine("Enter 1 for ASCENDING  | 2 for DESCENDING");
-            Console.Write("Choice: ");
+            Console.WriteLine("Enter 0 for ASCENDING  | 1 for DESCENDING: ");
 
             if (int.TryParse(Console.ReadLine(), out var sortingOrder))
             {
-                _sortingOrder = sortingOrder;
                 switch (sortingOrder)
                 {
+                    case 0:
+                    {
+                        _order = SortingOrder.Asc;
+                        success = true;
+                    };
+                        break;
                     case 1:
                     {
-                        Console.WriteLine("You chose ASCENDING");
-                        _order = SortingArrangement.Ascending;
+                        _order = SortingOrder.Desc;
                         success = true;
                     };
                         break;
-                    case 2:
-                    {
-                        Console.WriteLine("You chose DESCENDING");
-                        _order = SortingArrangement.Descending;
-                        success = true;
-                    };
-                        break;
-                    default:
-                    {
-                        Console.WriteLine("Invalid choice, please try again!");
-                    };
+                    default: Console.WriteLine("Invalid number, please try again!");
                         break;
                 }
             };
         } while (success == false);
-        
-        // do the actual sorting based on user preferences
-        if (_sortingMethod == 1)
+
+        switch (_sortingMethod)
         {
-            // use heap sort
-            var sortedArray = Hs.Sort(array, _order);
-            Hs.DisplayArray("\nSorted Array", sortedArray);
-        } 
-        
-        else if (_sortingMethod == 2)
-        {
-            // use merge sort
-            var sortedArray = Ms.Sort(array, _order);
-            Hs.DisplayArray("\nSorted Array", sortedArray);
+            // do the actual sorting based on user preferences
+            case 0:
+            {
+                // use heap sort
+                var sortedArray = Hs.Sort(array, _order);
+                Hs.ShowArray("\nSorted", sortedArray);
+                break;
+            }
+            case 1:
+            {
+                // use merge sort
+                var sortedArray = Ms.Sort(array, _order);
+                Hs.ShowArray("\nSorted", sortedArray);
+                break;
+            }
+            case 2:
+            {
+                // use selection sort
+                var sortedArray = Ss.Sort(array, _order);
+                Hs.ShowArray("\nSorted", sortedArray);
+                break;
+            }
         }
     }
 }
