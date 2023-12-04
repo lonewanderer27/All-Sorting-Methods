@@ -7,8 +7,10 @@ public enum SortingArrangement
 
 public class AllSortMethods
 {
+    private static readonly BubbleSort Bs = new BubbleSort();
     private static readonly HeapSort Hs = new HeapSort();
     private static readonly MergeSort Ms = new MergeSort();
+    private static readonly InsertionSort Is = new InsertionSort();
     private static readonly SelectionSort Ss = new SelectionSort();
     private static SortingArrangement _order;
     public static void Main()
@@ -42,7 +44,7 @@ public class AllSortMethods
         do
         {
             Console.WriteLine("Choose sorting method: ");
-            Console.WriteLine("Enter 1 for HEAP SORT  | 2 for MERGE SORT");
+            Console.WriteLine("1 for HEAP SORT\n2 for MERGE SORT\n3 for INSERTION SORT\n4 for SELECTION SORT\n5 for BUBBLE SORT");
             Console.Write("Choice: ");
 
             if (int.TryParse(Console.ReadLine(), out var sortingMethod))
@@ -64,7 +66,19 @@ public class AllSortMethods
                         break;
                     case 3:
                     {
+                        Console.WriteLine("You chose INSERTION SORT");
+                        success = true;
+                    };
+                        break;
+                    case 4:
+                    {
                         Console.WriteLine("You chose SELECTION SORT");
+                        success = true;
+                    };
+                        break;
+                    case 5:
+                    {
+                        Console.WriteLine("You chose BUBBLE SORT");
                         success = true;
                     };
                         break;
@@ -132,6 +146,20 @@ public class AllSortMethods
         {
             // use selection sort
             var sortedArray = Ss.Sort(array, _order);
+            Hs.DisplayArray("\nSorted Array", sortedArray);
+        }
+        
+        else if (_sortingMethod == 4)
+        {
+            // use insertion sort
+            var sortedArray = Is.Sort(array, _order);
+            Hs.DisplayArray("\nSorted Array", sortedArray);
+        }
+        
+        else if (_sortingMethod == 5)
+        {
+            // use bubble sort
+            var sortedArray = Bs.Sort(array, _order);
             Hs.DisplayArray("\nSorted Array", sortedArray);
         }
         
